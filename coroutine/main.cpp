@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include <fstream>
 #include <string>
 #include <filesystem>
@@ -10,7 +10,8 @@
 #include "test.h"
 
 
-const char* g_targetDir = "./assets";
+const char* g_targetDir = "./assets"; // 指定的文件夹
+const char* g_targetFile = "./score.txt"; // 指定输出的文件
 
 
 coroutine checkNewFile(std::set<std::wstring> &doneTest) {

@@ -19,7 +19,7 @@ std::wstring Test::getScoreRecord() const {
 		m_scoreRecord += L", ";
 		m_scoreRecord += m_name;
 		m_scoreRecord += L", ";
-		m_scoreRecord += (L'0' + (wchar_t)m_sex); // 0Ů��1��
+		m_scoreRecord += (L'0' + (wchar_t)m_sex); // L'0'女，L'1'男
 		m_scoreRecord += L", ";
 		m_scoreRecord += std::to_wstring(m_trueOrFalseQuestionsCorrectAnswerCount);
 		m_scoreRecord += L", ";
@@ -51,19 +51,18 @@ bool Test::read(const std::filesystem::path& path) {
 
 	int countLine{ 1 };
 	for (std::wstring line; std::getline(ifs, line); ++countLine) {
-		if (1 == countLine) { // ��ȡ�Ա�
+		if (1 == countLine) { // 读取性别
 			if (1 == line.length() && (L'0' == line[0] || L'1' == line[0])) {
-				// L'0' Ů����L'1" ����
+				// 0 女 1 男
 				m_sex = static_cast<Sex>(line[0] - L'0');
 			} else {
 				m_sex = Sex::Unknown;
 			}
-		} else if (2 == countLine) { // ��ȡ����
+		} else if (2 == countLine) { // 读取姓名
 			m_name = line;
-		} else if (3 <= countLine && 12 >= countLine) { // ��ȡ�ж���
-			// ��ȷ��X��������O
-			m_trueOrFalseQuestionsAnswer[countLine - 3] = (L"O" == line); // ����Ƚϵ�����ĸO��������0
-		} else if (13 <= countLine && 22 >= countLine) { // ��ȡѡ����
+		} else if (3 <= countLine && 12 >= countLine) { // 读取判断题答案
+			m_trueOrFalseQuestionsAnswer[countLine - 3] = (L"O" == line);
+		} else if (13 <= countLine && 22 >= countLine) { // 读取选择题答案
 			Choice choice = Choice::Unknown;
 			if (L"A" == line) {
 				choice = Choice::A;
